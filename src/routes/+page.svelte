@@ -1,2 +1,56 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import { cart, products, type TItem } from '$lib/stores/store';
+
+	import type { PageServerData } from './$types';
+	import axios from 'axios';
+
+	// export let data: PageServerData;
+
+	function addToCart(item: TItem) {
+		cart.update((items) => [...items, item]);
+	}
+</script>
+
+<div class="contanier-overflow">
+	<div class="container">
+		<img
+			class="logo-image"
+			src="https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63e86ab4c21faa7bc0bd90dd_Logo.svg"
+			loading="lazy"
+			alt=""
+		/>
+		<nav>
+			<div class="leftside">
+				<a href="/">Category</a>
+				<a href="/">Deals</a>
+				<a href="/">What's New</a>
+				<a href="/">Delivery</a>
+			</div>
+
+			<div class="rightside">
+				<a class="account" href="/login">
+					<img src="./account-image.png" alt="logo" />
+					<div>Account</div>
+				</a>
+
+				<a class="cart" href="/cart">
+					<img src="./cart.png" alt="logo" />
+					<div>Cart</div>
+				</a>
+
+				<a href="/mypage">mypage</a>
+			</div>
+		</nav>
+	</div>
+</div>
+
+<div class="List">
+	<ul>
+		{#each $products as item}
+			<li>
+				{item.name} - {item.price}원
+				<button on:click={() => addToCart(item)}>장바구니에 담기</button>
+			</li>
+		{/each}
+	</ul>
+</div>
