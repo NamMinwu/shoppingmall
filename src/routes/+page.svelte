@@ -48,7 +48,7 @@
 		{#each data.products as product}
 			<li>
 				{product.name} - {product.price}원
-				<button>장바구니에 담기</button>
+				<button>장바구니 담기</button>
 			</li>
 		{/each}
 	</ul>
