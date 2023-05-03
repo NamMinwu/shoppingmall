@@ -4,11 +4,10 @@
 	import type { PageServerData } from './$types';
 	import axios from 'axios';
 
-	// export let data: PageServerData;
-
-	function addToCart(item: TItem) {
-		cart.update((items) => [...items, item]);
-	}
+	export let data: PageServerData;
+	// function addToCart(item: TItem) {
+	// 	cart.update((items) => [...items, item]);
+	// }
 </script>
 
 <div class="contanier-overflow">
@@ -46,10 +45,10 @@
 
 <div class="List">
 	<ul>
-		{#each $products as item}
+		{#each data.products as product}
 			<li>
-				{item.name} - {item.price}원
-				<button on:click={() => addToCart(item)}>장바구니에 담기</button>
+				{product.name} - {product.price}원
+				<button>장바구니에 담기</button>
 			</li>
 		{/each}
 	</ul>
