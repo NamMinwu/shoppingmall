@@ -47,8 +47,11 @@
 	<ul>
 		{#each data.products as product}
 			<li>
-				{product.name} - {product.price}원
-				<button>장바구니 담기</button>
+				<span>{product.name} - {product.price}원</span>
+				<form method="post">
+					<input type="hidden" name="id" value={product.id} />
+					<button type="submit">장바구니 담기</button>
+				</form>
 			</li>
 		{/each}
 	</ul>
