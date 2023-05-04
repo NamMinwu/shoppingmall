@@ -17,5 +17,5 @@ export const load = (async ({ locals }) => {
 			}
 		}
 	});
-	return { user: locals.user, products: user?.orders.flatMap((item) => item.products) };
+	return { user: locals.user, orders: user?.orders };
 }) satisfies PageServerLoad;
