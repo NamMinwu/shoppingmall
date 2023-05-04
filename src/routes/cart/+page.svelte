@@ -1,33 +1,29 @@
 <script lang="ts">
 	import { cart } from '$lib/stores/store';
-	import axios from 'axios';
-	import type { PageServerData } from './$types';
-
-	export let data: PageServerData;
-	async function submitOrder() {
-		const response = await axios.post('/api/orders', { items: $cart });
-		if (response !== undefined) {
-			console.log('주문이 성공적으로 처리되었습니다!');
-			cart.set([]);
-		} else {
-			console.error('주문 처리 중 오류가 발생했습니다:');
-		}
-	}
+	import { enhance } from '$app/forms';
 </script>
 
-{#if data !== undefined}
-	<h2>장바구니</h2>
-	{#if $cart.length > 0}
+<h2>장바구니</h2>
+{#if $cart.length > 0}
+	<form
+		method="post"
+		use:enhance={({ form, data, action, cancel, submitter }) => {
+			return async ({ result, update }) => {
+				console.log(result.type === 'success');
+				if (result.type === 'success') {
+					cart.set([]);
+				}
+			};
+		}}
+	>
 		<ul>
-			{#each $cart as item}
-				<input hidden value={item.name} name="item.name" />
-				<li>{item.name} - {item.price}</li>
+			{#each $cart as product}
+				<input hidden value={product.id} name="productId" />
+				<li>{product.name} - {product.price}</li>
 			{/each}
 		</ul>
-		<button on:click={submitOrder}>주문</button>
-	{:else}
-		<p>장바구니가 비어 있습니다.</p>
-	{/if}
+		<button type="submit">주문</button>
+	</form>
 {:else}
-	<p>login please</p>
+	<p>장바구니가 비어 있습니다.</p>
 {/if}
