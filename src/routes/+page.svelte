@@ -1,13 +1,15 @@
 <script lang="ts">
-	import { cart, products, type TItem } from '$lib/stores/store';
+	// import { cart, type TItem } from '$lib/stores/store';
+	import type { Product } from '@prisma/client';
 
 	import type { PageServerData } from './$types';
-	import axios from 'axios';
+	import { cart } from '$lib/stores/store';
 
 	export let data: PageServerData;
-	// function addToCart(item: TItem) {
-	// 	cart.update((items) => [...items, item]);
-	// }
+
+	function addToCart(product: Product) {
+		cart.set([...$cart, product]);
+	}
 </script>
 
 <div class="contanier-overflow">
@@ -48,10 +50,7 @@
 		{#each data.products as product}
 			<li>
 				<span>{product.name} - {product.price}원</span>
-				<form method="post">
-					<input type="hidden" name="id" value={product.id} />
-					<button type="submit">장바구니 담기</button>
-				</form>
+				<button on:click={() => addToCart(product)}>장바구니 담기</button>
 			</li>
 		{/each}
 	</ul>
