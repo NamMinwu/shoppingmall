@@ -19,6 +19,7 @@
 		<h2>장바구니</h2>
 		<div class="cart">
 			{#each $cart as product}
+				<input hidden name="productId" value={product.id} />
 				<div class="product">
 					<div class="product-image">
 						<img src="./{product.name}.png" alt="logo" />
